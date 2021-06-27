@@ -1,12 +1,6 @@
-# Node build artifacts
-node_modules
-npm-debug.log
-
-# Local development
-*.env
-*.dev
-.DS_Store
-
-# Docker
-Dockerfile
-docker-compose.yml
+venv
+*.pyc
+staticfiles
+.env
+db.sqlite3
+getting-started/*
