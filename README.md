@@ -5,4 +5,4 @@ Team:
 Bryce Koenig
 Bryan DiStefano
 Zuhair Ahmed
-Crowd Sourced Fitness App hosted via Heroku on Node.js server: https://cs467fitnessapp.herokuapp.com/
+Crowd Sourced Fitness App hosted via Heroku on Python/Flask server: https://cs467fitnessapp.herokuapp.com/
