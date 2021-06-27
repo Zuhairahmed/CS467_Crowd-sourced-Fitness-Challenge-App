@@ -7,5 +7,5 @@ Team:
 3. Zuhair Ahmed
 
 
-Crowd Sourced Fitness App hosted via Herokuo on Node.js server: https://cs467fitnessapp.herokuapp.com/ 
+Crowd Sourced Fitness App hosted via Heroku on Node.js server: https://cs467fitnessapp.herokuapp.com/ 
 
