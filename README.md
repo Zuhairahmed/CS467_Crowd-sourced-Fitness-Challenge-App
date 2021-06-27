@@ -10,3 +10,6 @@ Hosted app via Heroku via Python - https://fitnesschallengeapp.herokuapp.com/
 
 Getting started on Heroku with Python FAQ - https://devcenter.heroku.com/articles/getting-started-with-python
 
+Heroku Postgres FAQ - https://devcenter.heroku.com/categories/heroku-postgres
+
+
