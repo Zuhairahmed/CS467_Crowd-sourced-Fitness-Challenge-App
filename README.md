@@ -7,5 +7,5 @@ Team:
 3. Zuhair Ahmed
 
 
-Weather app hosted via Heroku: https://cs467fitnessapp.herokuapp.com/ 
+Crowd Sourced Fitness App hosted via Heroku: https://cs467fitnessapp.herokuapp.com/ 
 
