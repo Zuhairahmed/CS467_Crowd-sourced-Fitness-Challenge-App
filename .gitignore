@@ -1,6 +1,7 @@
-venv
-*.pyc
-staticfiles
+venv/
 .env
-db.sqlite3
-getting-started/*
+
+*.pyc
+__pycache__/
+
+instance/

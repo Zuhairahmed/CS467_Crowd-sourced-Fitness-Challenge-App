@@ -1,1 +1,1 @@
-web: gunicorn gettingstarted.wsgi
+web: flask db upgrade; gunicorn fitness_friends_challenge:'create_app()'
