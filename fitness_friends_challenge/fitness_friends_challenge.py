@@ -1,9 +1,7 @@
 from flask import Flask, redirect, render_template, request, url_for, session, Blueprint
 from fitness_friends_challenge import db
 from fitness_friends_challenge.models import Challenge
-from flask_bootstrap import Bootstrap
-from flask_nav import Nav
-from flask_nav.elements import *
+
 
 bp = Blueprint('fitness_friends_challenge', __name__)
 
