@@ -1,5 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'base-nav.html' %}
 
 {% block header %}
-  <h1 style="text-align:center">{% block title %}Welcome to the User Profile page{% endblock %}</h1>
+  <!Put the username here>
+  <h3 style="text-align:center">{% block title %}Welcome to the User Profile page{% endblock %}</h3>
+  <body class="text-center">
+  <a type="button" class="btn btn-danger" href="{{ url_for('fitness_friends_challenge.index') }}">Log Out</a>
+  </body>
 {% endblock %}
