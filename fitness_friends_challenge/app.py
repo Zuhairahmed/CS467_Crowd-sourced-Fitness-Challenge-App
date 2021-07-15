@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, request, url_for, session, Blueprint
 from fitness_friends_challenge import db
-from fitness_friends_challenge.models import Challenge
+from fitness_friends_challenge.models import Challenge, Users, Badge, Favorites, Tag, Goal, Chat, Image, WallOfFame, Kind
 
 bp = Blueprint('fitness_friends_challenge', __name__)
 

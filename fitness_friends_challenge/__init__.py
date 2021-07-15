@@ -18,7 +18,7 @@ def create_app():
     migrate.init_app(app, db)
 
     from . import models
-    from . import fitness_friends_challenge
+    from . import app 
     app.register_blueprint(fitness_friends_challenge.bp)
 
     return app
