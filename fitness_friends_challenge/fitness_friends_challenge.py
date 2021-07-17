@@ -7,9 +7,23 @@ bp = Blueprint('fitness_friends_challenge', __name__)
 
 
 # Default route displays Home/Landing page
-@bp.route('/')
+@bp.route('/', methods=('GET', 'POST'))
 def index():
-    return render_template('index.html')
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        email = request.form['email']
+        if not username:
+            flash('User info is required.')
+        else:
+            db.session.add(User(username=username, password=password, firstname=firstname, lastname=lastname,
+                                email=email))
+            db.session.commit()
+
+    users = User.query.all()
+    return render_template('index.html', users=users)
 
 # Route for user registration page
 
