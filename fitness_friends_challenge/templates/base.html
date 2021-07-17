@@ -9,9 +9,15 @@
 {% endblock %}
 <section class="content">
   <div class="container">
-    <header>
+
+    <head>
       {% block header %}{% endblock %}
-    </header>
+    </head>
+
+    <body>
+      {% block body %}{% endblock %}
+    </body>
+
     {% for message in get_flashed_messages() %}
     <div class="alert alert-danger">
       <p class="lead">{{ message }}</p>
