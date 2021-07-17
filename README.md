@@ -1,4 +1,5 @@
 Hosted web app via Heroku  - https://fitnesschallengeapp.herokuapp.com/
+
 Fitness App - CS467_400_Summer 2021
 
 Dev Team:
