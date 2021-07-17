@@ -1,6 +1,6 @@
 Hosted web app via Heroku  - https://fitnesschallengeapp.herokuapp.com/
 
-Fitness App - CS467_400_Summer 2021
+Fitness Friends Challenge App - OSU CS467 Summer 2021
 
 Dev Team:
 1. Bryan Vincent DiStefano - distefab@oregonstate.edu
