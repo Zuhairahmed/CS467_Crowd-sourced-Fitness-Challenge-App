@@ -5,6 +5,10 @@
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
 <!-- CSS StyleSheet Static -->
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<!-- Favicon -->
+<link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+{% block links %}
+{% endblock %}
 {% block navbar %}
 {% endblock %}
 <section class="content">
@@ -12,9 +16,7 @@
 
     <head>
       <title>Fitness Friends Challenge</title>
-      <!-- Favicon Image NOT loading, can someone fix? -->
-      <link rel="shortcut icon" type="image/png" href="fitness_friends_challenge/static/favicon.png" />
-      {% block header %}{% endblock %}
+
     </head>
 
     <body>

@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, url_for, session, Blueprint
+from flask import Flask, redirect, render_template, request, url_for, session, Blueprint, flash
 from fitness_friends_challenge import db
 from fitness_friends_challenge.models import Challenge, User, Badge, Favorites, Tag, Goal, Chat, Image, WallOfFame, Kind
 
@@ -25,8 +25,25 @@ def index():
     users = User.query.all()
     return render_template('index.html', users=users)
 
-# Route for user registration page
+@bp.route('/login', methods=('GET', 'POST'))
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        email = request.form['email']
+        if not username:
+            flash('User info is required.')
+        else:
+            db.session.add(User(username=username, password=password, firstname=firstname, lastname=lastname,
+                                email=email))
+            db.session.commit()
 
+    users = User.query.all()
+    return render_template('login.html', users=users)
+
+# Route for user registration page
 
 @bp.route('/registration')
 def registration():
