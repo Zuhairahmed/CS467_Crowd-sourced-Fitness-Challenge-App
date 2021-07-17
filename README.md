@@ -9,6 +9,7 @@ Dev Team:
 
 Supporting Links: 
 Getting started on Heroku with Python FAQ - https://devcenter.heroku.com/articles/getting-started-with-python
+
 Heroku Postgres FAQ - https://devcenter.heroku.com/categories/heroku-postgres
 
 
