@@ -88,7 +88,7 @@ def registration():
         db.session.add(User(username=username, password=password, firstname=firstname, lastname=lastname,
                             email=email, walloffame_id=None))
         db.session.commit()
-        return redirect(url_for('index.html'))
+        return redirect(url_for('fitness_friends_challenge.index'))
     return render_template('registration.html')
 
 # Route for user profile page
