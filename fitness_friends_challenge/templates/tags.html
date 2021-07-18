@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h3 style="text-align:center">{% block title %}Tags{% endblock %}</h3>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">New Tag</h5>
+    <form method="POST">
+      <div class="form-group">
+        <input type="text" , class="form-control" , placeholder="Tag Name" , name="name" , required>
+      </div>
+      <button type="submit" , class="btn btn-default">
+        <i class="fa fa-plus"></i> Add Tag 
+      </button>
+    </form>
+  </div>
+</div>
+
+{% if tags %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Current Tags</h5>
+    <table class="table table-striped">
+      {% for tag in tags %}
+      <tr>
+        <td class="table-text">{{ tag['name'] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

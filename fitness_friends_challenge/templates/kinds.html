@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h3 style="text-align:center">{% block title %}Kinds{% endblock %}</h3>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">New Kind</h5>
+    <form method="POST">
+      <div class="form-group">
+        <input type="text" , class="form-control" , placeholder="Kind Name" , name="name" , required>
+      </div>
+      <button type="submit" , class="btn btn-default">
+        <i class="fa fa-plus"></i> Add Kind 
+      </button>
+    </form>
+  </div>
+</div>
+
+{% if kinds %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Current Kinds</h5>
+    <table class="table table-striped">
+      {% for kind in kinds %}
+      <tr>
+        <td class="table-text">{{ kind['name'] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

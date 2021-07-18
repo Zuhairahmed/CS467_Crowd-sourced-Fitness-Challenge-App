@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h3 style="text-align:center">{% block title %}Welcome to the registration page{% endblock %}</h3>
+<h3 style="text-align:center">{% block title %} {% endblock %}</h3>
+
 {% endblock %}
-{% block content %}
-  <h3>Registration</h3>
+
+{% block body %}
+
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">New User</h5>
@@ -22,4 +24,24 @@
     </form>
   </div>
 </div>
+
+{% if users %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Current Users</h5>
+    <table class="table table-striped">
+      {% for user in users %}
+      <tr>
+        <td class="table-text">{{ user['username'] }}</td>
+        <td class="table-text">{{ user['password'] }}</td>
+        <td class="table-text">{{ user['firstname'] }}</td>
+        <td class="table-text">{{ user['lastname'] }}</td>
+        <td class="table-text">{{ user['email'] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endif %}
+
 {% endblock %}
