@@ -1,3 +1,18 @@
+###############################################################################
+#
+# Authors: Brian DiStefano, Bryce Koenig, Zuhair Ahmed
+# Course: CS467_400_Summer 2021
+#
+# Description:
+# TBD
+#
+# References:
+# TBD1
+# TBD2
+# TBD3
+#
+###############################################################################
+
 from flask import Flask, redirect, render_template, request, url_for, session, Blueprint, flash
 from fitness_friends_challenge import db
 from fitness_friends_challenge.models import Challenge, User, Badge, Favorites, Tag, Goal, Chat, Image, WallOfFame, Kind
@@ -25,6 +40,7 @@ def index():
     users = User.query.all()
     return render_template('index.html', users=users)
 
+
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     if request.method == 'POST':
@@ -44,6 +60,7 @@ def login():
     return render_template('login.html', users=users)
 
 # Route for user registration page
+
 
 @bp.route('/registration')
 def registration():
