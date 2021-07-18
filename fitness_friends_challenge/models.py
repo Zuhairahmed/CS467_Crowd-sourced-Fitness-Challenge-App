@@ -32,9 +32,9 @@ class Challenge(db.Model):
     description = db.Column(db.Text(), nullable=False)
     kind_id = db.Column(db.Integer, db.ForeignKey('kind.id'))
     badges = db.relationship('Badge', secondary=challenge_badges, lazy='dynamic')
-    favorites_id = db.Column(db.Integer, db.ForeignKey('favorites.id'))
-    walloffames = db.relationship('WallOfFame', lazy='dynamic')
-    goals = db.relationship('Goal', lazy='dynamic')
+    favorites_id = db.Column(db.Integer, db.ForeignKey('favorites.id', use_alter=True, name='fk_favorites_challenge'))
+    walloffames = db.relationship('WallOfFame', backref='walloffame', lazy='dynamic')
+    goals = db.relationship('Goal', backref='goal', lazy='dynamic')
     tags = db.relationship('Tag', secondary=challenge_tags, lazy='dynamic')
     chats = db.relationship('Chat', secondary=challenge_chats, lazy='dynamic')
     images = db.relationship('Image', secondary=challenge_images, lazy='dynamic')
@@ -47,17 +47,17 @@ class User(db.Model):
     firstname = db.Column(db.Text(), nullable=False)
     lastname = db.Column(db.Text(), nullable=False)
     email = db.Column(db.Text(), nullable=False)
-    images = db.relationship('Image', lazy='dynamic')
+    images = db.relationship('Image', backref='image', lazy='dynamic')
     badges = db.relationship('Badge', secondary=user_badges, lazy='dynamic')
-    chats = db.relationship('Chat', lazy='dynamic')
-    favorites = db.relationship('Favorites', lazy='dynamic')
-    #walloffame_id = db.Column(db.Integer, db.ForeignKey('walloffame.id'))
+    chats = db.relationship('Chat', backref='chat', lazy='dynamic')
+    favorites = db.relationship('Favorites', backref='favorites', lazy='dynamic')
+    walloffame_id = db.Column(db.Integer, db.ForeignKey('walloffame.id', use_alter=True, name='fk_walloffame_user'), nullable=True)
 
 class Badge(db.Model):
     __tablename__ = 'badge'
     id = db.Column(db.Integer, primary_key=True)
-    users = db.relationship('User', secondary=user_badges, lazy='dynamic')
-    challenges = db.relationship('Challenge', secondary=challenge_badges, lazy='dynamic')
+    users = db.relationship('User', secondary=user_badges, overlaps='badges', lazy='dynamic')
+    challenges = db.relationship('Challenge', secondary=challenge_badges, overlaps='badges', lazy='dynamic')
     image = db.Column(db.Text(), nullable=False)
 
 class Goal(db.Model):
@@ -71,35 +71,35 @@ class Kind(db.Model):
     __tablename__ = 'kind'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text(), nullable=False)
-    challenges = db.relationship('Challenge', lazy='dynamic')
+    challenges = db.relationship('Challenge', backref='challenge', lazy='dynamic')
 
 class Tag(db.Model):
     __tablename__ = 'tag'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text(), nullable=False)
-    challenges = db.relationship('Challenge', secondary=challenge_tags, lazy='dynamic')
+    challenges = db.relationship('Challenge', secondary=challenge_tags, overlaps='tags', lazy='dynamic')
 
 class Chat(db.Model):
     __tablename__ = 'chat'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    challenges = db.relationship('Challenge', secondary=challenge_chats, lazy='dynamic')
+    challenges = db.relationship('Challenge', secondary=challenge_chats, overlaps='chats', lazy='dynamic')
 
 class Image(db.Model):
     __tablename__ = 'image'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text(), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    challenges = db.relationship('Challenge', secondary=challenge_images, lazy='dynamic')
+    challenges = db.relationship('Challenge', secondary=challenge_images, overlaps='images', lazy='dynamic')
 
 class Favorites(db.Model):
     __tablename__ = 'favorites'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    challenges = db.relationship('Challenge', lazy='dynamic')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id', use_alter=True, name='fk_user_favorites'))
+    challenges = db.relationship('Challenge', backref='challenge_favorites', lazy='dynamic')
 
 class WallOfFame(db.Model):
     __tablename__ = 'walloffame'
     id = db.Column(db.Integer, primary_key=True)
-    #users = db.relationship('User', lazy='dynamic')
-    challenge_id = db.Column(db.Integer, db.ForeignKey('challenge.id'))
+    users = db.relationship('User', backref='user', lazy='dynamic')
+    challenge_id = db.Column(db.Integer, db.ForeignKey('challenge.id', use_alter=True, name='fk_challenge_walloffame'))

@@ -1,4 +1,4 @@
-{% extends 'base-nav.html' %}
+{% extends 'base.html' %}
 
 {% block header %}
   <!Put the username here>
@@ -6,4 +6,23 @@
   <body class="text-center">
   <a type="button" class="btn btn-danger" href="{{ url_for('fitness_friends_challenge.login') }}">Log Out</a>
   </body>
+{% endblock %}
+
+{% block body %}
+{% if user %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Profile</h5>
+    <table class="table table-striped">
+      <tr>
+        <td class="table-text">{{ user['username'] }}</td>
+        <td class="table-text">{{ user['password'] }}</td>
+        <td class="table-text">{{ user['firstname'] }}</td>
+        <td class="table-text">{{ user['lastname'] }}</td>
+        <td class="table-text">{{ user['email'] }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+{% endif %}
 {% endblock %}
