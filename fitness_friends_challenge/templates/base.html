@@ -62,24 +62,22 @@
   <div class="container">
 
     <head>
-      <title>Fitness Friends Challenge</title>
+      <title>{% block title %} {% endblock %}</title>
 
     </head>
-
-    <body>
-      {% block body %}{% endblock %}
-    </body>
-
+      <body>
+    {% block content %}
+    {% endblock %}
+      </body>
     {% for message in get_flashed_messages() %}
     <div class="alert alert-danger">
       <p class="lead">{{ message }}</p>
     </div>
     {% endfor %}
 
-    {% block content %}{% endblock %}
-  </div>
+    </div>
 </section>
-
+</div>
 <!-- Bootstrap related JavaScript -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
