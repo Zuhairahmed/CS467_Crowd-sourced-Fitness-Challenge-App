@@ -250,3 +250,10 @@ input[type=text]:placeholder {
     border-width:3px !important;
     border-color: black !important;
 }
+
+.faq-questions{
+    background: white;
+    text-align: left;
+    border-width:3px !important;
+    border-color: black !important;
+}
