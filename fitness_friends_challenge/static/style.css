@@ -234,3 +234,19 @@ input[type=text]:placeholder {
 #icon {
   width:60%;
 }
+
+.carousel-inner > .item > img {
+  width:640px;
+  height:360px;
+}
+
+.border-thick {
+    border-width:5px !important;
+}
+
+.about-section{
+    background: white;
+    text-align: center;
+    border-width:3px !important;
+    border-color: black !important;
+}
