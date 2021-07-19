@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
-
+{% block header %}
+{% block title %}FFC 500 Error{% endblock %}
+{% endblock %}
 {% block content %}
 <h1>500 Error: An unexpected error has occurred</h1>
 <p><a href="{{ url_for('main.index') }}">Back</a> </p>

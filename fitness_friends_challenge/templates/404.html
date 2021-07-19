@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
-
+{% block header %}
+{% block title %}FFC 404 Error{% endblock %}
+{% endblock %}
 {% block content %}
     <h1>404 Error: File Not Found</h1>
     <p><a href="{{ url_for('main.index') }}">Back</a> </p>
