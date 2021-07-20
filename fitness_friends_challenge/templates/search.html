@@ -2,8 +2,46 @@
 
 {% block header %}
 {% block title %}FFC Challenges Search{% endblock %}
-{% endblock %}{% block content %}
-<br>
-<h3>Challenges Search Page</h3>
-<br>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+      <div class="card-body">
+        {% if tag %}
+        <h5 class="card-title">Sign up for a {{tag['name']}} challenge!</h5>
+        {% endif %}
+        {% if challenges %}
+        <form method="POST">
+          <div class="form-group">
+            <table class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Select Option</th>
+                </tr>
+              </thead>
+              {% for challenge in challenges %}
+                <tr>
+                  <td class="table-text">{{challenge['name']}}</td>
+                  <td class="table-text">{{challenge['description']}}</td>
+                  <td class="table-text">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="challenge_name" 
+                          value="{{challenge['name']}}" required>
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </table>
+          </div>
+          <button type="submit" , class="btn btn-default">
+            <i class="fa fa-plus"></i> Sign Up
+          </button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
 {% endblock %}

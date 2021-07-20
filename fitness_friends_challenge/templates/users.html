@@ -3,6 +3,7 @@
 {% block header %}
 {% block title %}FFC Users{% endblock %}
 {% endblock %}
+
 {% block content %}
 
 <div class="card">
@@ -23,11 +24,20 @@
   </div>
 </div>
 
-{% if users %}
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">Current Users</h5>
+    {% if users %}
     <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Username</th>
+          <th>Password</th>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
       {% for user in users %}
       <tr>
         <td class="table-text">{{ user['username'] }}</td>
@@ -38,8 +48,8 @@
       </tr>
       {% endfor %}
     </table>
+    {% endif %}
   </div>
 </div>
-{% endif %}
 
 {% endblock %}

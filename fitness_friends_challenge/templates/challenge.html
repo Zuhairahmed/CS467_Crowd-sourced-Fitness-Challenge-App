@@ -3,7 +3,8 @@
 {% block title %}FFC Challenges{% endblock %}
 {% endblock %}
 {% block content %}
-<br>
-<h3>Challenges</h3>
-<br>
+  {% if challenge %}
+    <h5>{{challenge['name']}}</h5>
+    <p>{{challenge['description']}}</p>
+  {% endif %}
 {% endblock %}

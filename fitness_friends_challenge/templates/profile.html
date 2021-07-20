@@ -8,14 +8,19 @@
 {% endblock %}
 
 {% block content %}
-<br>
-<h3>Welcome to {{ user['username'] }}'s Profile page</h3>
-<br>
 {% if user %}
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">Profile</h5>
     <table class="table table-striped">
+      <thead class="thead-dark"></thead>
+      <tr>
+        <th>Name</th>
+        <th>Password</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+      </tr>
       <tr>
         <td class="table-text">{{ user['username'] }}</td>
         <td class="table-text">{{ user['password'] }}</td>
@@ -24,6 +29,67 @@
         <td class="table-text">{{ user['email'] }}</td>
       </tr>
     </table>
+    <div class="card">
+       <div class="card-body">
+        <h5 class="card-title">User Badges Earned</h5>
+          {% for badge in badges %}
+            <li><img src="{{url_for('static', filename=badge)}}" width="50" height="50" alt=""></li>
+          {% endfor %}
+        </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">User Favorite Challenges</h5>
+        {% if challenges %}
+          <div class="form-group">
+            <table class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th></th>
+                </tr>
+              </thead>
+              {% for challenge in challenges %}
+                <tr>
+                  <td class="table-text">{{challenge['name']}}</td>
+                  <td class="table-text">{{challenge['description']}}</td>
+                  <td class="table-text">
+                    <a href="{{ url_for('fitness_friends_challenge.challengehome', name=challenge.name) }}"
+                      class="btn btn-primary" role="button">
+                     Visit Page 
+                    </a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </table>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        {% if tags %}
+          <h5 class="card-title">Search for a Challenge</h5>
+          <form method="POST">
+            <div class="form-group">
+              <label for="tag">Choose a Tag</label>
+              <select class="form-control" name="name" id="tag">
+                {% for tag in tags %}
+                <option value="{{tag['name']}}">{{tag['name']}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <button type="submit" , class="btn btn-default">
+                <i class="fa fa-plus"></i> Search 
+            </button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+      <a href="{{ url_for('fitness_friends_challenge.createchallenge', username=user.username) }}"
+        class="btn btn-primary" role="button">Create a Challenge
+      </a>
   </div>
 </div>
 {% endif %}
