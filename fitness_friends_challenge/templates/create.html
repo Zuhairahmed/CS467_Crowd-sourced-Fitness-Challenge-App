@@ -4,7 +4,36 @@
 {% block title %}FFC Create Challenges{% endblock %}
 {% endblock %}
 {% block content %}
-<br>
-<h3>Create Challenges Page</h3>
-<br>
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Create Challenge</h5>
+    <form method="POST">
+      <div class="form-group">
+        <input type="text", class="form-control" placeholder="User Name" name="username" required>
+        <input type="text" class="form-control" placeholder="Challenge Name" name="name" required>
+        <input type="text" class="form-control" placeholder="Description" name="description" required>
+        <label for="kind">Choose kind of challenge:</label>
+        {% if kinds %}
+        <select class="form-control" name="kind" id="kind">
+          {% for kind in kinds %}
+          <option value="{{kind['name']}}">{{kind['name']}}</option>
+          {% endfor %}
+        </select>
+        {% endif %}
+        {% if tags %}
+        <label for="tag">Choose tag for challenge:</label>
+        <select class="form-control" name="tag" id="tag">
+          {% for tag in tags %}
+          <option value="{{tag['name']}}">{{tag['name']}}</option>
+          {% endfor %}
+        </select>
+        {% endif %}
+      </div>
+      <button type="submit" , class="btn btn-default">
+        <i class="fa fa-plus"></i>Add Challenge
+      </button>
+    </form>
+  </div>
+</div>
 {% endblock %}
