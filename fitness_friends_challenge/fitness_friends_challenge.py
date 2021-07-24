@@ -104,12 +104,13 @@ def userprofile(username):
     favorites = Favorites.query.filter_by(user_id=user.id).all()
     challenges = []
     for favorite in favorites:
-            challenges.append(Challenge.query.filter_by(favorites_id=favorite.id).first())
+        for challenge in Challenge.query.filter_by(favorites_id=favorite.id).all():
+            challenges.append(challenge)
     return render_template('profile.html', user=user, badges=badges, tags=tags, challenges=challenges)
 
 # Route for challenge search results page
-@bp.route('/challenges/search/<name>/users/<username>', methods=('GET', 'POST'))
-def challenges(name, username):
+@bp.route('/users/<username>/challenges/search/<name>', methods=('GET', 'POST'))
+def challenges(username, name):
     if request.method == 'POST':
         challenge_name = request.form['challenge_name']
         challenge = Challenge.query.filter_by(name=challenge_name).first()
@@ -118,16 +119,15 @@ def challenges(name, username):
         user_favorites.challenges.append(challenge)
         db.session.add(user_favorites)
         db.session.commit()
-        return redirect(url_for('fitness_friends_challenge.challengehome', name=challenge.name))
+        return redirect(url_for('fitness_friends_challenge.userprofile', username=username))
     tag = Tag.query.filter_by(name=name).first()
     challenges = Challenge.query.filter(Challenge.tags.any(name=tag.name)).all()
     return render_template('search.html', challenges=challenges, tag=tag)
 
 # Route for create challenge page
-@bp.route('/challenges/create', methods=('GET', 'POST'))
-def createchallenge():
+@bp.route('/users/<username>/challenges/create', methods=('GET', 'POST'))
+def createchallenge(username):
     if request.method == 'POST':
-        username = request.form['username']
         user = User.query.filter_by(username=username).first()
         db.session.add(Favorites(user_id=user.id))
         db.session.commit()
@@ -143,7 +143,12 @@ def createchallenge():
         db.session.add(new_challenge)
         db.session.commit()
         challenge = Challenge.query.filter_by(name=name).first()
-        return redirect(url_for('fitness_friends_challenge.challengehome', name=challenge.name))
+        user_favorites = Favorites.query.filter_by(user_id=user.id).first()
+        user_favorites.challenges.append(challenge)
+        db.session.add(user_favorites)
+        db.session.commit()
+        update_fav = Favorites.query.filter_by(user_id=user.id).first()
+        return redirect(url_for('fitness_friends_challenge.userprofile', username=username))
     tags = Tag.query.all()
     kinds = Kind.query.all()
     return render_template('create.html', tags=tags, kinds=kinds)

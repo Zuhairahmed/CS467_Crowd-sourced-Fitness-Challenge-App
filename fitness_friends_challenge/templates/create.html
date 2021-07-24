@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block header %}
 {% block title %}FFC Create Challenges{% endblock %}
 {% endblock %}
@@ -10,7 +9,6 @@
     <h5 class="card-title">Create Challenge</h5>
     <form method="POST">
       <div class="form-group">
-        <input type="text", class="form-control" placeholder="User Name" name="username" required>
         <input type="text" class="form-control" placeholder="Challenge Name" name="name" required>
         <input type="text" class="form-control" placeholder="Description" name="description" required>
         <label for="kind">Choose kind of challenge:</label>
@@ -30,7 +28,7 @@
         </select>
         {% endif %}
       </div>
-      <button type="submit" , class="btn btn-default">
+      <button type="submit" class="btn btn-default">
         <i class="fa fa-plus"></i>Add Challenge
       </button>
     </form>
