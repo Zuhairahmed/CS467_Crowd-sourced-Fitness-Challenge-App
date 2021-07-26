@@ -257,3 +257,11 @@ input[type=text]:placeholder {
     border-width:3px !important;
     border-color: black !important;
 }
+
+.challenge-format{
+    text-align:center;
+    border: solid;
+    border-width: 3px !important;
+    border-color: black !important;
+
+}

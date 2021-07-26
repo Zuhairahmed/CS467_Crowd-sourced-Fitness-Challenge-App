@@ -13,60 +13,66 @@
 <div class="card">
   <div class="card-body">
     <h5 class="card-title" style="text-align:center">{{ user['username'] }}'s Profile</h5>
-    <table class="table table-striped">
-      <thead class="thead-dark"></thead>
-      <tr>
-        <th>Name</th>
-        <th>Password</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-      </tr>
-      <tr>
-        <td class="table-text">{{ user['username'] }}</td>
-        <td class="table-text">{{ user['password'] }}</td>
-        <td class="table-text">{{ user['firstname'] }}</td>
-        <td class="table-text">{{ user['lastname'] }}</td>
-        <td class="table-text">{{ user['email'] }}</td>
-      </tr>
-    </table>
-    <div class="card">
+        <div class="row">
+          <div class="col-xs-4">
+               <p>Username: </p>
+          </div>
+          <div class="col-xs-8">
+            <p>{{ user['username'] }}</p>
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-xs-4">
+              <p>Password: </p>
+            </div>
+            <div class="col-xs-8">
+              <p>{{ user['password'] }}</p>
+            </div>
+          </div>
+            <div class="row">
+              <div class="col-xs-4">
+                <p>Name: </p>
+              </div>
+              <div class="col-xs-8">
+                <p>{{ user['firstname'] }} {{ user['lastname'] }}</p>
+              </div>
+            </div>
+              <div class="row">
+                <div class="col-xs-4">
+                  <p>Email: </p>
+                </div>
+                <div class="col-xs-8">
+                  <p>{{ user['email'] }}</p>
+                </div>
+              </div>
+        </div>
+</div>
+   <div class="card">
        <div class="card-body">
         <h5 class="card-title">User Badges Earned</h5>
           {% for badge in badges %}
             <li><img src="{{url_for('static', filename=badge)}}" width="50" height="50" alt=""></li>
           {% endfor %}
         </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">User Favorite Challenges</h5>
+
+      <div>
+
+        <h5>User Favorite Challenges</h5>
         {% if challenges %}
-          <div class="form-group">
-            <table class="table table-striped">
-              <thead class="thead-dark">
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th></th>
-                </tr>
-              </thead>
               {% for challenge in challenges %}
-                <tr>
-                  <td class="table-text">{{challenge['name']}}</td>
-                  <td class="table-text">{{challenge['description']}}</td>
-                  <td class="table-text">
-                    <a href="{{ url_for('fitness_friends_challenge.challengehome', name=challenge.name) }}"
-                      class="btn btn-primary" role="button">
-                     Visit Page 
-                    </a>
-                  </td>
-                </tr>
-              {% endfor %}
-            </table>
-          </div>
+        <br><br>
+        <div class="challenge-format">
+                    <h6>Name: {{challenge['name']}} </h6>
+                  <h6>Description:</h6>
+                <p>{{challenge['description']}}</p>
+                  <a href="{{ url_for('fitness_friends_challenge.challengehome', name=challenge.name) }}"
+                     class="btn btn-primary" role="button">
+                    Click to Visit
+                  </a>
+                  </div>
+
+            {% endfor %}
         {% endif %}
-      </div>
     </div>
     <div class="card">
       <div class="card-body">
@@ -88,9 +94,11 @@
         {% endif %}
       </div>
     </div>
+     <div>
       <a href="{{ url_for('fitness_friends_challenge.createchallenge', username=user.username) }}"
         class="btn btn-primary" role="button">Create a Challenge
       </a>
+     </div>
   </div>
 </div>
 {% endif %}
