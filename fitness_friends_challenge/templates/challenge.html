@@ -4,7 +4,64 @@
 {% endblock %}
 {% block content %}
   {% if challenge %}
-    <h5>{{challenge['name']}}</h5>
-    <p>{{challenge['description']}}</p>
+    <br><br>
+    <div class="card">
+      <div class="card-body">
+        <h5>{{challenge['name']}}</h5>
+        <p>{{challenge['description']}}</p>
+        <!--Add in button functionality-->
+        <a href="{{ url_for('fitness_friends_challenge.index')}}"
+           class="btn btn-danger" role="button">Unfavorite This Challenge
+        </a>
+      </div>
+    </div>
+    <br><br>
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+            <h5>Hall of Fame</h5>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <p>Rank</p>
+            </div>
+            <div class="col-sm-8">
+              <p>Username</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <p>1</p>
+            </div>
+            <div class="col-sm-8">
+              <p>Enter #1 Username</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <p>2</p>
+            </div>
+            <div class="col-sm-8">
+              <p>Enter #2 Username</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <p>3</p>
+            </div>
+            <div class="col-sm-8">
+              <p>Enter #3 Username</p>
+            </div>
+          </div>
+      </div>
+    </div>
+    <br><br>
+    <div class="card">
+      <div class="card-body">
+        <h5>{{challenge['name']}} Chat</h5>
+        <!--Enter Chat-->
+      </div>
+    </div>
+    <br><br>
   {% endif %}
 {% endblock %}
