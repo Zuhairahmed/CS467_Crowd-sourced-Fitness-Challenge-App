@@ -10,3 +10,4 @@ Flask-WTF==0.15.1
 greenlet==1.1.0
 requests==2.25.1
 WTForms==2.3.3
+psycopg2==2.9.1
