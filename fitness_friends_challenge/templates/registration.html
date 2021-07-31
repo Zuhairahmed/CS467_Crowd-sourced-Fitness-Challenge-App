@@ -9,10 +9,17 @@
 <div class="card text-center">
   <div class="card-body">
     <h5 class="card-title">Register for Fitness Friends Challenge Today</h5>
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ message }}
+    </div>
+    {% endfor %}
     <form method="POST">
       <div class="form-group">
         <input type="text" , class="form-control" , placeholder="User Name" , name="username" , required>
         <input type="text" , class="form-control" , placeholder="Password" , name="password" , required>
+        <p>(Password must be 8-32 characters and have a capital letter and number to be accepted.)</p>
         <input type="text" , class="form-control" , placeholder="First Name" , name="firstname" , required>
         <input type="text" , class="form-control" , placeholder="Last Name" , name="lastname" , required>
         <input type="text" , class="form-control" , placeholder="Email Address" , name="email" , required>
