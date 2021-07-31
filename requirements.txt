@@ -31,7 +31,7 @@ PySocks==1.7.1
 python-dateutil==2.8.1
 python-editor==1.0.4
 requests==2.25.1
-setuptools==52.0.0.post20210125
+setuptools==52.0.0
 six==1.16.0
 SQLAlchemy==1.4.19
 typing-extensions==3.10.0.0
