@@ -16,17 +16,17 @@
     </div>
     {% endfor %}
     <form method="POST">
-      <div class="form-group">
-        <input type="text" , class="form-control" , placeholder="User Name" , name="username" , required>
-        <input type="text" , class="form-control" , placeholder="Password" , name="password" , required>
+      <div class="form-group form-group-sm">
+        <input type="text"  class="form-control"  placeholder="User Name"  name="username"  required>
+        <input type="password"  class="form-control"  placeholder="Password"  name="password"  required>
         <p>(Password must be 8-32 characters and have a capital letter and number to be accepted.)</p>
-        <input type="text" , class="form-control" , placeholder="First Name" , name="firstname" , required>
-        <input type="text" , class="form-control" , placeholder="Last Name" , name="lastname" , required>
-        <input type="text" , class="form-control" , placeholder="Email Address" , name="email" , required>
+        <input type="text"  class="form-control"  placeholder="First Name"  name="firstname"  required>
+        <input type="text"  class="form-control"  placeholder="Last Name"  name="lastname"  required>
+        <input type="text"  class="form-control"  placeholder="Email Address"  name="email"  required>
       </div>
       <button type="submit" , class="btn btn-primary" >Register
       </button>
     </form>
-  </div>
+</div>
 </div>
 {% endblock %}
