@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# Authors: Bryan DiStefano, Bryce Koenig, Zuhair Ahmed
+# Authors: BrYan DiStefano, Bryce Koenig, Zuhair Ahmed
 # Course: CS467_400_Summer 2021
 #
 # Description:
@@ -12,10 +12,11 @@
 # TBD3
 #
 ###############################################################################
-from flask import Flask, redirect, render_template, request, url_for, session, Blueprint, flash
-from fitness_friends_challenge import db
-from fitness_friends_challenge.models import Challenge, User, Badge, Favorites, Tag, Goal, Chat, Image, WallOfFame, Kind
+from flask import redirect, render_template, request, url_for, Blueprint
 
+from fitness_friends_challenge import db
+from fitness_friends_challenge.forms import RegistrationForm, flash_errors
+from fitness_friends_challenge.models import Challenge, User, Badge, Favorites, Tag, Kind
 
 bp = Blueprint('fitness_friends_challenge', __name__)
 
@@ -79,7 +80,8 @@ def kinds():
 # Route for user registration page
 @bp.route('/registration', methods=('GET', 'POST'))
 def registration():
-    if request.method == 'POST':
+    form = RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
         username = request.form['username']
         password = request.form['password']
         firstname = request.form['firstname']
@@ -89,7 +91,9 @@ def registration():
                             lastname=lastname, email=email, walloffame_id=None))
         db.session.commit()
         return redirect(url_for('fitness_friends_challenge.index'))
-    return render_template('registration.html')
+    else:
+        flash_errors(form)
+    return render_template('registration.html', form=form)
 
 # Route for user profile page
 @bp.route('/users/<username>/profile', methods=('GET', 'POST'))
