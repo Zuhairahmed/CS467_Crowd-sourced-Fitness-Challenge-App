@@ -1,6 +1,6 @@
 ###############################################################################
 #
-# Authors: Brian DiStefano, Bryce Koenig, Zuhair Ahmed
+# Authors: Bryan DiStefano, Bryce Koenig, Zuhair Ahmed
 # Course: CS467_400_Summer 2021
 #
 # Description:
