@@ -9,8 +9,20 @@
     <h5 class="card-title">Create Challenge</h5>
     <form method="POST">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Challenge Name" name="name" required>
-        <input type="text" class="form-control" placeholder="Description" name="description" required>
+        <input type="text" class="form-control" placeholder="Challenge Name" name="challenge_name" required>
+        <label for="challenge_description">Enter a description for challenge:</label>
+        <textarea rows="5" class="form-control" id="challenge_description" name="challenge_description" 
+          required></textarea>
+        <input type="text" class="form-control" placeholder="Goal Name" name="goal_name" required>
+        <label for="target_one">Enter number for first goal:</label>
+        <input type="text" class="form-control" placeholder="Number" name="first_target_number" 
+          id="target_one" required>
+        <label for="target_two">Enter number for second goal:</label>
+        <input type="text" class="form-control" placeholder="Number" name="second_target_number" 
+          id="target_two" required>
+        <label for="target_three">Enter number for final goal:</label>
+        <input type="text" class="form-control" placeholder="Number" name="third_target_number" 
+          id="target_three" required>
         <label for="kind">Choose kind of challenge:</label>
         {% if kinds %}
         <select class="form-control" name="kind" id="kind">
@@ -20,16 +32,39 @@
         </select>
         {% endif %}
         {% if tags %}
-        <label for="tag">Choose tag for challenge:</label>
-        <select class="form-control" name="tag" id="tag">
+        <label for="tags">Choose Tags (one or more):</label>
+        <select multiple class="form-control" name="tags" id="tags">
           {% for tag in tags %}
           <option value="{{tag['name']}}">{{tag['name']}}</option>
           {% endfor %}
         </select>
         {% endif %}
+        {% if badges %}
+        <label for="badges">Choose Badges (one or more):</label>
+        <select multiple class="form-control" name="badges" id="badges">
+          {% for badge in badges %}
+          <option value="{{badge['image']}}">{{badge['image']}}</option>
+          {% endfor %}
+        </select>
+        {% endif %}
+        {% if images %}
+        <label for="image">Choose Image:</label>
+        <select class="form-control" name="image" id="image">
+          {% for image in images %}
+          <option value="{{image['name']}}">{{image['name']}}</option>
+          {% endfor %}
+        </select>
+        {% else %}
+        <label for="image">Choose Image:</label>
+        <select class="form-control" name="image" id="image">
+          <option value="fitness1.jpg">fitness1.jpg</option>
+          <option value="fitness2.jpg">fitness2.jpg</option>
+          <option value="fitness3.jpg">fitness3.jpg</option>
+        </select>
+        {% endif %}
       </div>
       <button type="submit" class="btn btn-default">
-        <i class="fa fa-plus"></i>Add Challenge
+        <i class="fa fa-plus" aria-hidden="true"></i> Add Challenge
       </button>
     </form>
   </div>

@@ -1,8 +1,8 @@
 """fitnessfriendschallenge
 
-Revision ID: f9cefc67316c
+Revision ID: 1d3bc4bbd11d
 Revises: 
-Create Date: 2021-07-18 03:43:10.359244
+Create Date: 2021-08-01 22:03:11.089006
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f9cefc67316c'
+revision = '1d3bc4bbd11d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,7 +21,8 @@ def upgrade():
     op.create_table('badge',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('image', sa.Text(), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('image')
     )
     op.create_table('favorites',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -32,12 +33,14 @@ def upgrade():
     op.create_table('kind',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.Text(), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name')
     )
     op.create_table('tag',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.Text(), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name')
     )
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -47,8 +50,11 @@ def upgrade():
     sa.Column('lastname', sa.Text(), nullable=False),
     sa.Column('email', sa.Text(), nullable=False),
     sa.Column('walloffame_id', sa.Integer(), nullable=True),
+    sa.Column('challenges_completed', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['walloffame_id'], ['walloffame.id'], name='fk_walloffame_user', use_alter=True),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('username')
     )
     op.create_table('walloffame',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -60,11 +66,13 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.Text(), nullable=False),
     sa.Column('description', sa.Text(), nullable=False),
+    sa.Column('creator', sa.Text(), nullable=False),
     sa.Column('kind_id', sa.Integer(), nullable=True),
     sa.Column('favorites_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['favorites_id'], ['favorites.id'], name='fk_favorites_challenge', use_alter=True),
     sa.ForeignKeyConstraint(['kind_id'], ['kind.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name')
     )
     op.create_table('chat',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -75,6 +83,16 @@ def upgrade():
     op.create_table('image',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.Text(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name')
+    )
+    op.create_table('progress',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('first_goal_progress', sa.Integer(), nullable=False),
+    sa.Column('second_goal_progress', sa.Integer(), nullable=False),
+    sa.Column('third_goal_progress', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -122,10 +140,15 @@ def upgrade():
     op.create_table('goal',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.Text(), nullable=False),
-    sa.Column('description', sa.Text(), nullable=False),
+    sa.Column('first_target_number', sa.Integer(), nullable=False),
+    sa.Column('second_target_number', sa.Integer(), nullable=False),
+    sa.Column('third_target_number', sa.Integer(), nullable=False),
     sa.Column('challenge_id', sa.Integer(), nullable=True),
+    sa.Column('progress_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['challenge_id'], ['challenge.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.ForeignKeyConstraint(['progress_id'], ['progress.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name')
     )
     # ### end Alembic commands ###
 
@@ -138,6 +161,7 @@ def downgrade():
     op.drop_table('challengechats')
     op.drop_table('challengebadges')
     op.drop_table('userbadges')
+    op.drop_table('progress')
     op.drop_table('image')
     op.drop_table('chat')
     op.drop_table('challenge')

@@ -4,64 +4,110 @@
 {% endblock %}
 {% block content %}
   {% if challenge %}
-    <br><br>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title" style="text-align: center">{{challenge['name']}} Home Page</h5>
+      <p class="card-text">Created by: {{challenge['creator']}}</p>
+      {% if challenge_image %}
+      <div class="container-med" style="max-width: 500">
+        <img class="img-fluid" src="{{url_for('static', filename='images/' + challenge_image)}}" alt="">
+      </div>
+      {% endif %}
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Badges you can earn on completion</h5>
+          {% if challenge_badges %}
+            {% for badge in challenge_badges %}
+            <div class="container-sm" style="max-width: 150">
+              <img class="img-fluid" src="{{url_for('static', filename='badges/' + badge)}}" alt="">
+            </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
     <div class="card">
       <div class="card-body">
-        <h5>{{challenge['name']}}</h5>
-        <p>{{challenge['description']}}</p>
-        <!--Add in button functionality-->
-        <a href="{{ url_for('fitness_friends_challenge.index')}}"
-           class="btn btn-danger" role="button">Unfavorite This Challenge
+        {% if user %}
+        <h5 class="card-title" style="text-align: center">{{user['username']}}'s Goal Progress</h5>
+        {% endif %}
+        <table class="table table-striped">
+          <thead class="thead-dark"></thead>
+          <tr>
+            <th>Goal Target</th>
+            <th>Last Entered Progress</th>
+            <th>Challenge Status</th>
+          </tr>
+          {% if progress and goal %}
+          <tr>
+            <td class="table-text">{{goal['first_target_number']}}</td>
+            <td class="table-text">{{progress['first_goal_progress']}}</td>
+            {% if goal['first_target_number'] - progress['first_goal_progress'] == 0 %}
+            <td class="table-text">Completed</td>
+            {% else %}
+            <td class="table-text">Incomplete</td>
+            {% endif %}
+          </tr>
+          <tr>
+            <td class="table-text">{{goal['second_target_number']}}</td>
+            <td class="table-text">{{progress['second_goal_progress']}}</td>
+            {% if goal['second_target_number'] - progress['second_goal_progress'] == 0 %}
+            <td class="table-text">Completed</td>
+            {% else %}
+            <td class="table-text">Incomplete</td>
+            {% endif %}
+          </tr>
+          <tr>
+            <td class="table-text">{{goal['third_target_number']}}</td>
+            <td class="table-text">{{progress['third_goal_progress']}}</td>
+            {% if goal['third_target_number'] - progress['third_goal_progress'] == 0 %}
+            <td class="table-text">Completed</td>
+            {% else %}
+            <td class="table-text">Incomplete</td>
+            {% endif %}
+          </tr>
+          {% endif %}
+        </table>
+        {% if challenge_incomplete %}
+        <form method="POST">
+          <div class="form-group">
+            {% if goal and progress %}
+              {% if goal['first_target_number'] - progress['first_goal_progress'] != 0 %}
+              <label for="target_one_input">Enter the progress achieved for first goal:</label>
+              <input type="text" class="form-control" placeholder="Number" name="first_goal_progress" 
+                id="target_one_input" required>
+              {% else %}
+              <input type="hidden" class="form-control" name="first_goal_progress" 
+                value="{{goal['first_target_number']}}">
+              {% endif %}
+              {% if goal['second_target_number'] - progress['second_goal_progress'] != 0 %}
+               <label for="target_two_input">Enter the progress achieved for the second goal:</label>
+               <input type="text" class="form-control" placeholder="Number" name="second_goal_progress"
+                id="target_two_input" required>
+              {% else %}
+              <input type="hidden" name="second_goal_progress" class="form-control" 
+                value="{{goal['second_target_number']}}">
+              {% endif %}
+              {% if goal['third_target_number'] - progress['third_goal_progress'] != 0 %}
+              <label for="target_three_input">Enter the progress achieved for the third goal:</label>
+              <input type="text" class="form-control" placeholder="Number" name="third_goal_progress" 
+                id="target_three_input" required>
+              {% endif %}
+            {% endif %}
+          </div>
+          <button type="submit" class="btn btn-default">
+            <i class="fa fa-plus"></i> Submit Progress
+          </button>
+        </form>
+        {% else %}
+        <h5 class="card-title">You have completed the challenge and have been added to the Wall of Fame!</h5>
+        <a href="{{ url_for('fitness_friends_challenge.walloffame', username=user.username, 
+                  name=challenge.name) }}"
+          class="btn btn-primary" role="button">Visit Wall of Fame
         </a>
+        {% endif %}
       </div>
     </div>
-    <br><br>
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-            <h5>Hall of Fame</h5>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <p>Rank</p>
-            </div>
-            <div class="col-sm-8">
-              <p>Username</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <p>1</p>
-            </div>
-            <div class="col-sm-8">
-              <p>Enter #1 Username</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <p>2</p>
-            </div>
-            <div class="col-sm-8">
-              <p>Enter #2 Username</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-4">
-              <p>3</p>
-            </div>
-            <div class="col-sm-8">
-              <p>Enter #3 Username</p>
-            </div>
-          </div>
-      </div>
-    </div>
-    <br><br>
-    <div class="card">
-      <div class="card-body">
-        <h5>{{challenge['name']}} Chat</h5>
-        <!--Enter Chat-->
-      </div>
-    </div>
-    <br><br>
+  </div>
   {% endif %}
 {% endblock %}
