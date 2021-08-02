@@ -4,7 +4,25 @@
 {% block title %}FFC Wall of Fame{% endblock %}
 {% endblock %}
 {% block content %}
-<br>
-<h3>Challenge Wall of Fame</h3>
-<br>
+<div class="card">
+  <div class="card-body">
+    {% if challenge %}
+    <h5 class="card-title">{{challenge['name']}} Wall of Fame</h5>
+    {% if users %}
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Username</th>
+        </tr>
+      </thead>
+      {% for user in users %}
+      <tr>
+        <td class="table-text">{{ user['username'] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% endif %}
+    {% endif %}
+  </div>
+</div>
 {% endblock %}
