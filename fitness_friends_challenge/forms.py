@@ -16,14 +16,14 @@ def flash_errors(form):
 
 
 def username_taken_check(form, user_name):
-    free = User.query.filter_by(username=user_name.data).first()
-    if not free:
+    taken = User.query.filter_by(username=user_name.data).first()
+    if taken:
         raise ValidationError('That username is taken. Please choose another.')
 
 
 def email_taken_check(form, user_email):
-    free = User.query.filter_by(email=user_email.data).first()
-    if not free:
+    taken = User.query.filter_by(email=user_email.data).first()
+    if taken:
         raise ValidationError('That email is taken. Please choose another.')
 
 
