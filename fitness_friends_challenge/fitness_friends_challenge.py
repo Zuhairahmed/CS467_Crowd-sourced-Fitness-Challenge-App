@@ -20,6 +20,13 @@ from fitness_friends_challenge.forms import RegistrationForm, flash_errors
 
 bp = Blueprint('fitness_friends_challenge', __name__)
 
+@bp.app_errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@bp.app_errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
 
 # Default route displays Home/Landing page
 @bp.route('/', methods=('GET', 'POST'))
@@ -309,3 +316,8 @@ def about():
 @bp.route('/learn-more')
 def faq():
     return render_template('faq.html')
+
+
+
+
+
