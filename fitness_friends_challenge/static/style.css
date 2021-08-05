@@ -286,3 +286,10 @@ input[type=text]:placeholder {
     border-color: black !important;
 
 }
+
+.team-pic{
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+}
+}

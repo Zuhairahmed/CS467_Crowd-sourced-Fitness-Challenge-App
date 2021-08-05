@@ -35,7 +35,7 @@ def index():
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
-        if user.password == password:
+        if User.check_password(user, password):
             return redirect(url_for('fitness_friends_challenge.userprofile', username=user.username))
     return render_template('index.html')
 
@@ -49,7 +49,7 @@ def users():
         lastname = request.form['lastname']
         email = request.form['email']
         db.session.add(User(username=username, password=password, firstname=firstname, 
-                            lastname=lastname, email=email, walloffame_id=None, challenges_completed=0))
+                            lastname=lastname, email=email))
         db.session.commit()
     users = User.query.all()
     return render_template('users.html', users=users)
@@ -110,7 +110,7 @@ def registration():
         lastname = request.form['lastname']
         email = request.form['email']
         db.session.add(User(username=username, password=password, firstname=firstname, 
-                            lastname=lastname, email=email, walloffame_id=None, challenges_completed=0))
+                            lastname=lastname, email=email))
         db.session.commit()
         return redirect(url_for('fitness_friends_challenge.index'))
     else:

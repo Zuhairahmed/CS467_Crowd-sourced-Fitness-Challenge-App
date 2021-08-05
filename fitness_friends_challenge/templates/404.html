@@ -4,7 +4,12 @@
 {% endblock %}
 {% block content %}
 <br>
-    <h1>404 Error: File Not Found</h1>
+    <div class="card">
+        <div class="card-body text-center">
+            <h1>404 Error: File Not Found</h1>
+            <br>
+            <p><a href="{{ url_for('fitness_friends_challenge.index') }}" class="btn btn-primary">Take me back to the Login Page</a> </p>
+        </div>
+    </div>
 <br>
-    <p><a href="{{ url_for('fitness_friends_challenge.index') }}">Back</a> </p>
 {% endblock %}

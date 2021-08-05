@@ -1,4 +1,5 @@
 from fitness_friends_challenge import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 challenge_badges = db.Table('challengebadges',
     db.Column('id', db.Integer, primary_key=True),
@@ -55,6 +56,18 @@ class User(db.Model):
     walloffame_id = db.Column(db.Integer, db.ForeignKey('walloffame.id', use_alter=True, name='fk_walloffame_user'), nullable=True)
     goals_progress = db.relationship('Progress', backref='progress', lazy='dynamic')
     challenges_completed = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, username, password, firstname, lastname, email):
+        self.username = username
+        self.password = generate_password_hash(password)
+        self.firstname = firstname
+        self.lastname = lastname
+        self.email = email
+        self.walloffame_id = None
+        self.challenges_completed = 0
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 
 class Badge(db.Model):
     __tablename__ = 'badge'
