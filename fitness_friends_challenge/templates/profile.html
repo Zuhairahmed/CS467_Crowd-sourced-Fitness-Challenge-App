@@ -6,26 +6,11 @@
 
 {% block content %}
 {% if user %}
-<br><br>
-<div class="card">
+<br>
+<h3>{{ user['username'] }}'s Profile</h3>
+<br>
+<div class="card text-center">
   <div class="card-body">
-    <h5 class="card-title" style="text-align: center">{{ user['username'] }}'s Profile</h5>
-      <div class="row">
-          <div class="col-xs-4">
-               <p>Username: </p>
-          </div>
-          <div class="col-xs-8">
-            <p>{{ user['username'] }}</p>
-          </div>
-      </div>
-          <div class="row">
-            <div class="col-xs-4">
-              <p>Password: </p>
-            </div>
-            <div class="col-xs-8">
-              <p>{{ user['password'] }}</p>
-            </div>
-          </div>
             <div class="row">
               <div class="col-xs-4">
                 <p>Name: </p>
@@ -44,7 +29,8 @@
               </div>
     </div>
 </div>
-    <div class="card">
+<br>
+    <div class="card text-center">
         <div class="card-body">
         <h5 class="card-title">User Badges Earned</h5>
           {% for badge in badges %}
@@ -56,7 +42,8 @@
           {% endfor %}
         </div>
     </div>
-    <div class="card">
+<br>
+    <div class="card text-center">
       <div class="card-body">
         <h5 class="card-title">User Favorite Challenges</h5>
         {% if challenges %}
@@ -87,7 +74,8 @@
         {% endif %}
       </div>
     </div>
-    <div class="card">
+<br>
+    <div class="card text-center">
       <div class="card-body">
         {% if tags %}
           <h5 class="card-title">Search for a Challenge</h5>
@@ -107,10 +95,12 @@
         {% endif %}
       </div>
     </div>
-    <div>
+<br>
+    <div class="text-center">
       <a href="{{ url_for('fitness_friends_challenge.createchallenge', username=user.username) }}"
-        class="btn btn-primary" role="button">Create a Challenge
+        class="btn btn-primary align-center" role="button">Create a Challenge
       </a>
     </div>
+<br>
 {% endif %}
 {% endblock %}

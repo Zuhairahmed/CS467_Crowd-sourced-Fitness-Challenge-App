@@ -109,6 +109,7 @@ def registration():
         firstname = request.form['firstname']
         lastname = request.form['lastname']
         email = request.form['email']
+        # changed the values added here by taking out challenges_completed and walloffame_id and initing them instead
         db.session.add(User(username=username, password=password, firstname=firstname, 
                             lastname=lastname, email=email))
         db.session.commit()

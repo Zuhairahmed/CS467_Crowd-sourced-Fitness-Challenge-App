@@ -57,6 +57,7 @@ class User(db.Model):
     goals_progress = db.relationship('Progress', backref='progress', lazy='dynamic')
     challenges_completed = db.Column(db.Integer, nullable=False)
 
+    #added init to get hasing to work, init walloffame_id to None and challenges_completed to 0 instead of passing them those values
     def __init__(self, username, password, firstname, lastname, email):
         self.username = username
         self.password = generate_password_hash(password)
