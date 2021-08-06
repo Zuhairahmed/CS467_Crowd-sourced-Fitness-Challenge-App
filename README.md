@@ -1,3 +1,4 @@
+Team Name: Fitness Friends Challenge (FFC)
 1. Hosted web app via Heroku  - https://fitnesschallengeapp.herokuapp.com/
 2. Cross-platform app also via Google Play Store - TBD (In Google Play Store Review)
 
@@ -14,5 +15,3 @@ Supporting Links:
 1. Getting started on Heroku with Python FAQ - https://devcenter.heroku.com/articles/getting-started-with-python
 
 2. Heroku Postgres FAQ - https://devcenter.heroku.com/categories/heroku-postgres
-
-
