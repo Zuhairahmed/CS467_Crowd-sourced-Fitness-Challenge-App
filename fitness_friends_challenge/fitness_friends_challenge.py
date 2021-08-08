@@ -1,17 +1,19 @@
 ###############################################################################
 #
 # Authors: Bryan DiStefano, Bryce Koenig, Zuhair Ahmed
-# Course: CS467_400_Summer 2021
+# Course: OSU CS467_400_Summer 2021
 #
 # Description:
-# TBD
+# Friends Fitness Challenge is a crowd-sources fitness challenge cross-platform web application for Web and Mobile (Android)
+# Users have their own accounts and then are able to create and participate in user created fitness challenges.
 #
 # References:
-# TBD1
-# TBD2
-# TBD3
+# https://flask.palletsprojects.com/en/2.0.x/tutorial/index.html
+# https://docs.sqlalchemy.org/en/14/orm/tutorial.html
+# https://www.youtube.com/watch?v=2e4STDACVA8
 #
 ###############################################################################
+
 from flask import Flask, redirect, render_template, request, url_for, session, Blueprint, flash
 from fitness_friends_challenge import db
 from fitness_friends_challenge.models import Challenge, User, Badge, Favorites, Tag, Goal, Chat, Image, WallOfFame, Kind, Progress
@@ -20,15 +22,19 @@ from fitness_friends_challenge.forms import RegistrationForm, flash_errors
 
 bp = Blueprint('fitness_friends_challenge', __name__)
 
+
 @bp.app_errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
 
 @bp.app_errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
 
 # Default route displays Home/Landing page
+
+
 @bp.route('/', methods=('GET', 'POST'))
 def index():
     if request.method == 'POST':
@@ -39,7 +45,9 @@ def index():
             return redirect(url_for('fitness_friends_challenge.userprofile', username=user.username))
     return render_template('index.html')
 
-# Admin page to create and review created users 
+# Admin page to create and review created users
+
+
 @bp.route('/users', methods=('GET', 'POST'))
 def users():
     if request.method == 'POST':
@@ -48,13 +56,15 @@ def users():
         firstname = request.form['firstname']
         lastname = request.form['lastname']
         email = request.form['email']
-        db.session.add(User(username=username, password=password, firstname=firstname, 
+        db.session.add(User(username=username, password=password, firstname=firstname,
                             lastname=lastname, email=email))
         db.session.commit()
     users = User.query.all()
     return render_template('users.html', users=users)
 
-# Admin page to create and review created tags 
+# Admin page to create and review created tags
+
+
 @bp.route('/tags', methods=('GET', 'POST'))
 def tags():
     if request.method == 'POST':
@@ -64,7 +74,9 @@ def tags():
     tags = Tag.query.all()
     return render_template('tags.html', tags=tags)
 
-# Admin page to create and review created badges 
+# Admin page to create and review created badges
+
+
 @bp.route('/badges', methods=('GET', 'POST'))
 def badges():
     if request.method == 'POST':
@@ -74,7 +86,9 @@ def badges():
     badges = Badge.query.all()
     return render_template('badges.html', badges=badges)
 
-# Admin page to create and review created kind of challenges 
+# Admin page to create and review created kind of challenges
+
+
 @bp.route('/kinds', methods=('GET', 'POST'))
 def kinds():
     if request.method == 'POST':
@@ -84,7 +98,9 @@ def kinds():
     kinds = Kind.query.all()
     return render_template('kinds.html', kinds=kinds)
 
-# Admin page to create and review created kind of challenges 
+# Admin page to create and review created kind of challenges
+
+
 @bp.route('/images', methods=('GET', 'POST'))
 def images():
     if request.method == 'POST':
@@ -100,6 +116,8 @@ def images():
     return render_template('image.html', images=images)
 
 # Route for user registration page
+
+
 @bp.route('/registration', methods=('GET', 'POST'))
 def registration():
     form = RegistrationForm(request.form)
@@ -110,7 +128,7 @@ def registration():
         lastname = request.form['lastname']
         email = request.form['email']
         # changed the values added here by taking out challenges_completed and walloffame_id and initing them instead
-        db.session.add(User(username=username, password=password, firstname=firstname, 
+        db.session.add(User(username=username, password=password, firstname=firstname,
                             lastname=lastname, email=email))
         db.session.commit()
         return redirect(url_for('fitness_friends_challenge.index'))
@@ -119,6 +137,8 @@ def registration():
     return render_template('registration.html', form=form)
 
 # Route for user profile page
+
+
 @bp.route('/users/<username>/profile', methods=('GET', 'POST'))
 def userprofile(username):
     if request.method == 'POST':
@@ -133,10 +153,12 @@ def userprofile(username):
     for favorite in favorites:
         for challenge in Challenge.query.filter_by(favorites_id=favorite.id).all():
             challenges.append(challenge)
-    return render_template('profile.html', user=user, earned_badges=earned_badges, tags=tags, 
+    return render_template('profile.html', user=user, earned_badges=earned_badges, tags=tags,
                            challenges=challenges)
 
 # Route for challenge search results page
+
+
 @bp.route('/users/<username>/challenges/search/<name>', methods=('GET', 'POST'))
 def challenges(username, name):
     if request.method == 'POST':
@@ -149,10 +171,13 @@ def challenges(username, name):
         db.session.commit()
         return redirect(url_for('fitness_friends_challenge.userprofile', username=username))
     tag = Tag.query.filter_by(name=name).first()
-    challenges = Challenge.query.filter(Challenge.tags.any(name=tag.name)).all()
+    challenges = Challenge.query.filter(
+        Challenge.tags.any(name=tag.name)).all()
     return render_template('search.html', challenges=challenges, tag=tag)
 
 # Route for create challenge page
+
+
 @bp.route('/users/<username>/challenges/create', methods=('GET', 'POST'))
 def createchallenge(username):
     if request.method == 'POST':
@@ -168,7 +193,7 @@ def createchallenge(username):
         first_goal_step = request.form['first_target_number']
         second_goal_step = request.form['second_target_number']
         third_goal_step = request.form['third_target_number']
-        db.session.add(Goal(name=goal_name, first_target_number=first_goal_step, 
+        db.session.add(Goal(name=goal_name, first_target_number=first_goal_step,
                             second_target_number=second_goal_step,
                             third_target_number=third_goal_step, challenge_id=None))
         db.session.commit()
@@ -185,8 +210,8 @@ def createchallenge(username):
         for badge_name in badges_names:
             badge = Badge.query.filter_by(image=badge_name).first()
             badges_added.append(badge)
-        new_challenge = Challenge(name=challenge_name, description=description, creator=username, 
-                                favorites_id=favorites.id, kind_id=kind.id)
+        new_challenge = Challenge(name=challenge_name, description=description, creator=username,
+                                  favorites_id=favorites.id, kind_id=kind.id)
         new_challenge.images.append(image)
         new_challenge.goals.append(goal)
         for tag in tags_added:
@@ -198,7 +223,8 @@ def createchallenge(username):
         challenge = Challenge.query.filter_by(name=challenge_name).first()
         db.session.add(WallOfFame(challenge_id=challenge.id))
         db.session.commit()
-        walloffame = WallOfFame.query.filter_by(challenge_id=challenge.id).first()
+        walloffame = WallOfFame.query.filter_by(
+            challenge_id=challenge.id).first()
         challenge.walloffames.append(walloffame)
         db.session.add(challenge)
         db.session.commit()
@@ -223,7 +249,8 @@ def createchallenge(username):
             challenge_tag.challenges.append(challenge)
         challenge_badges = []
         for badge in badges_added:
-            challenge_badges.append(Badge.query.filter_by(image=badge.image).first())
+            challenge_badges.append(
+                Badge.query.filter_by(image=badge.image).first())
         for challenge_badge in challenge_badges:
             challenge_badge.challenges.append(challenge)
         user_favorites = Favorites.query.filter_by(user_id=user.id).first()
@@ -248,6 +275,8 @@ def createchallenge(username):
     return render_template('create.html', tags=tags, kinds=kinds, badges=badges, images=images)
 
 # Route for challenge home page
+
+
 @bp.route('/users/<username>/challenges/<name>', methods=('GET', 'POST'))
 def challengehome(username, name):
     if request.method == 'POST':
@@ -265,7 +294,8 @@ def challengehome(username, name):
             user_progress.third_goal_progress = third_goal_progress
             goal = Goal.query.filter_by(challenge_id=challenge.id).first()
             if goal.third_target_number - third_goal_progress == 0:
-                walloffame = WallOfFame.query.filter_by(challenge_id=challenge.id).first()
+                walloffame = WallOfFame.query.filter_by(
+                    challenge_id=challenge.id).first()
                 user.walloffame_id = walloffame.id
                 user.challenges_completed = user.challenges_completed + 1
                 if user.challenges_completed > 1:
@@ -277,7 +307,8 @@ def challengehome(username, name):
                                 user.badges.append(challenge_badge)
                 db.session.add(user)
                 db.session.commit()
-                user_add_to_wall = User.query.filter_by(username=username).first()
+                user_add_to_wall = User.query.filter_by(
+                    username=username).first()
                 walloffame.users.append(user_add_to_wall)
                 db.session.add(walloffame)
                 db.session.commit()
@@ -298,27 +329,29 @@ def challengehome(username, name):
     if goal.third_target_number - progress.third_goal_progress == 0:
         challenge_incomplete = False
     return render_template('challenge.html', challenge=challenge, challenge_image=challenge_image_by_creator,
-                            challenge_badges=challenge_badges, goal=goal, user=user, progress=progress,
-                            challenge_incomplete=challenge_incomplete)
+                           challenge_badges=challenge_badges, goal=goal, user=user, progress=progress,
+                           challenge_incomplete=challenge_incomplete)
 
 # Route for challenge wall of fame page
+
+
 @bp.route('/users/<username>/challenges/<name>/wall-of-fame')
 def walloffame(username, name):
     challenge = Challenge.query.filter_by(name=name).first()
-    challenge_walloffame = WallOfFame.query.filter_by(challenge_id=challenge.id).first()
+    challenge_walloffame = WallOfFame.query.filter_by(
+        challenge_id=challenge.id).first()
     return render_template('wall.html', users=challenge_walloffame.users, challenge=challenge)
 
 # Route for about us page
+
+
 @bp.route('/about-us')
 def about():
     return render_template('about.html')
 
 # Route for faq page
+
+
 @bp.route('/learn-more')
 def faq():
     return render_template('faq.html')
-
-
-
-
-
