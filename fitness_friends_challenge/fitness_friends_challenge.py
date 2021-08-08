@@ -376,3 +376,10 @@ def map():
 @bp.route('/social')
 def social():
     return render_template('social.html')
+
+# Route for radio page
+
+
+@bp.route('/radio')
+def radio():
+    return render_template('radio.html')
