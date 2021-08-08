@@ -362,3 +362,10 @@ def faq():
 @bp.route('/weather')
 def weather():
     return render_template('weather.html')
+
+# Route for map page
+
+
+@bp.route('/map')
+def map():
+    return render_template('map.html')
