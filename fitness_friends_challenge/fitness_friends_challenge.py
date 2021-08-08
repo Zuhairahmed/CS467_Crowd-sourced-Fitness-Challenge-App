@@ -355,3 +355,10 @@ def about():
 @bp.route('/learn-more')
 def faq():
     return render_template('faq.html')
+
+# Route for weather page
+
+
+@bp.route('/weather')
+def weather():
+    return render_template('weather.html')
