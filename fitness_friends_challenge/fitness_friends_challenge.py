@@ -369,3 +369,10 @@ def weather():
 @bp.route('/map')
 def map():
     return render_template('map.html')
+
+# Route for social page
+
+
+@bp.route('/social')
+def social():
+    return render_template('social.html')
