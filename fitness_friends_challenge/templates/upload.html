@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% block title %}FFC Upload Image{% endblock %}
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Upload New Image</h5>
+    <h6>Accepted formats are .jpg, .JPG, .JPG, .png, .PNG</h6>
+    <form method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <input type="file" class="form-control" name="file">
+        <input type="submit" value=Upload>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

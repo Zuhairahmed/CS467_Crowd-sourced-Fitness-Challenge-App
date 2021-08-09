@@ -48,7 +48,7 @@ def checkPassword(form, field):
 class RegistrationForm(Form):
     username = StringField('Username',
                            [InputRequired(message="Please enter a username"), validators.Length(min=3, max=10),
-                            checkUsername])
+                            checkUsername, username_taken_check])
     password = PasswordField('New Password',
                              [validators.DataRequired(message="Please enter a password."), checkPassword])
     firstname = StringField('First Name', [validators.data_required()])

@@ -11,13 +11,13 @@
     <h5 class="card-title">New User</h5>
     <form method="POST">
       <div class="form-group">
-        <input type="text" , class="form-control" , placeholder="User Name" , name="username" , required>
-        <input type="text" , class="form-control" , placeholder="Password" , name="password" , required>
-        <input type="text" , class="form-control" , placeholder="First Name" , name="firstname" , required>
-        <input type="text" , class="form-control" , placeholder="Last Name" , name="lastname" , required>
-        <input type="text" , class="form-control" , placeholder="Email Address" , name="email" , required>
+        <input type="text" class="form-control" placeholder="User Name" name="username" required>
+        <input type="text" class="form-control" placeholder="Password" name="password" required>
+        <input type="text" class="form-control" placeholder="First Name" name="firstname" required>
+        <input type="text" class="form-control" placeholder="Last Name" name="lastname" required>
+        <input type="text" class="form-control" placeholder="Email Address" name="email" required>
       </div>
-      <button type="submit" , class="btn btn-default">
+      <button type="submit" class="btn btn-default">
         <i class="fa fa-plus"></i> Add User
       </button>
     </form>
@@ -32,7 +32,6 @@
       <thead class="thead-dark">
         <tr>
           <th>Username</th>
-          <th>Password</th>
           <th>First name</th>
           <th>Last name</th>
           <th>Email</th>
@@ -41,7 +40,6 @@
       {% for user in users %}
       <tr>
         <td class="table-text">{{ user['username'] }}</td>
-        <td class="table-text">{{ user['password'] }}</td>
         <td class="table-text">{{ user['firstname'] }}</td>
         <td class="table-text">{{ user['lastname'] }}</td>
         <td class="table-text">{{ user['email'] }}</td>

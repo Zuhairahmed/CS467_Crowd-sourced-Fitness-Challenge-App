@@ -1,5 +1,6 @@
-from fitness_friends_challenge import db
+from fitness_friends_challenge import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 
 challenge_badges = db.Table('challengebadges',
     db.Column('id', db.Integer, primary_key=True),
@@ -41,14 +42,18 @@ class Challenge(db.Model):
     chats = db.relationship('Chat', secondary=challenge_chats, lazy='dynamic')
     images = db.relationship('Image', secondary=challenge_images, lazy='dynamic')
 
-class User(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
+class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.Text(), nullable=False, unique=True)
+    username = db.Column(db.Text(), nullable=False, unique=True, index=True)
     password = db.Column(db.Text(), nullable=False)
     firstname = db.Column(db.Text(), nullable=False)
     lastname = db.Column(db.Text(), nullable=False)
-    email = db.Column(db.Text(), nullable=False, unique=True)
+    email = db.Column(db.Text(), nullable=False, unique=True, index=True)
     images = db.relationship('Image', backref='image', lazy='dynamic')
     badges = db.relationship('Badge', secondary=user_badges, lazy='dynamic')
     chats = db.relationship('Chat', backref='chat', lazy='dynamic')
@@ -57,7 +62,8 @@ class User(db.Model):
     goals_progress = db.relationship('Progress', backref='progress', lazy='dynamic')
     challenges_completed = db.Column(db.Integer, nullable=False)
 
-    #added init to get hasing to work, init walloffame_id to None and challenges_completed to 0 instead of passing them those values
+    #added init to get hashing to work, init walloffame_id to None and challenges_completed to 0 
+    #instead of passing them those values
     def __init__(self, username, password, firstname, lastname, email):
         self.username = username
         self.password = generate_password_hash(password)
@@ -85,7 +91,7 @@ class Goal(db.Model):
     second_target_number = db.Column(db.Integer, nullable=False)
     third_target_number = db.Column(db.Integer, nullable=False)
     challenge_id = db.Column(db.Integer, db.ForeignKey('challenge.id'), nullable=True)
-    progress_id = db.Column(db.Integer, db.ForeignKey('progress.id'))
+    progresses = db.relationship('Progress', backref='goal_progress', lazy='dynamic')
 
 class Progress(db.Model):
     __tablename__ = 'progress'
@@ -94,7 +100,7 @@ class Progress(db.Model):
     second_goal_progress = db.Column(db.Integer, nullable=False)
     third_goal_progress = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    goals = db.relationship('Goal', backref='progress_goal', lazy='dynamic')
+    goal_id = db.Column(db.Integer, db.ForeignKey('goal.id'))
 
 class Kind(db.Model):
     __tablename__ = 'kind'

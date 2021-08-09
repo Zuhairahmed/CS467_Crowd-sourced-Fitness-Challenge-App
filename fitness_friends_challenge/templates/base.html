@@ -32,14 +32,37 @@
           <a class="nav-link" href="{{ url_for('fitness_friends_challenge.index') }}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('fitness_friends_challenge.registration') }}">Register</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="{{ url_for('fitness_friends_challenge.about') }}">About Us</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('fitness_friends_challenge.faq') }}">FAQ</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('fitness_friends_challenge.weather') }}">Local Weather</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('fitness_friends_challenge.map') }}">Map</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('fitness_friends_challenge.social') }}">Social Media</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('fitness_friends_challenge.radio') }}">Radio</a>
+        </li>
+        {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('fitness_friends_challenge.userprofile', 
+                    username=current_user.username)}}">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('fitness_friends_challenge.logout') }}">Log Out</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('fitness_friends_challenge.registration') }}">Register</a>
+                </li>
+        {% endif %}
+        {% if current_user.is_authenticated and current_user.username == 'Admin' %}
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('fitness_friends_challenge.users') }}">Users</a>
         </li>
@@ -55,18 +78,7 @@
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('fitness_friends_challenge.images') }}">Images</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('fitness_friends_challenge.weather') }}">Local Weather</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('fitness_friends_challenge.map') }}">Map</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('fitness_friends_challenge.social') }}">Social Media</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('fitness_friends_challenge.radio') }}">Radio</a>
-        </li>
+        {% endif %}
       </ul>
     </div>
   </nav>
@@ -79,15 +91,16 @@
 
       </head>
 
-      <body>
-        {% block content %}
-        {% endblock %}
-      </body>
       {% for message in get_flashed_messages() %}
       <div class="alert alert-danger">
         <p class="lead">{{ message }}</p>
       </div>
       {% endfor %}
+
+      <body>
+        {% block content %}
+        {% endblock %}
+      </body>
 
     </div>
   </section>

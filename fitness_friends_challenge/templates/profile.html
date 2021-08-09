@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
-{% if user %}
+{% if current_user.is_authenticated %}
 <br>
-<h3>{{ user['username'] }}'s Profile</h3>
+<h3>{{current_user.username}}'s Profile</h3>
 <br>
 <div class="card text-center">
   <div class="card-body">
@@ -16,7 +16,7 @@
                 <p>Name: </p>
               </div>
               <div class="col-xs-8">
-                <p>{{ user['firstname'] }} {{ user['lastname'] }}</p>
+                <p> {{ current_user.firstname}} {{ current_user.lastname}}</p>
               </div>
             </div>
               <div class="row">
@@ -24,22 +24,42 @@
                   <p>Email: </p>
                 </div>
                 <div class="col-xs-8">
-                  <p>{{ user['email'] }}</p>
+                  <p> {{ current_user.email}}</p>
                 </div>
               </div>
     </div>
 </div>
 <br>
+    <div class="text-center">
+      <h5>Upload your own image in order to use it when creating challenges!</h5>
+      <a href="{{ url_for('fitness_friends_challenge.upload', username=current_user.username) }}"
+        class="btn btn-primary align-center" role="button">Upload Image 
+      </a>
+    </div>
+<br>
+  <div class="card text-center">
+    <div class="card-body">
+      <h5 class="card-title">Uploaded Images</h5>
+      {% if images %}
+        {% for image in images %}
+            <div class="container-sm" style="max-width: 150; text-align: center; display: inline-block;">
+              <img class="img-fluid" src="{{url_for('static', filename='images/' + image.name)}}" alt="">
+            </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+<br>
     <div class="card text-center">
         <div class="card-body">
-        <h5 class="card-title">User Badges Earned</h5>
-          {% for badge in badges %}
-            <li>
-              <div class="container-sm" style="max-width: 150">
-              <img class="img-fluid" src="{{url_for('static', filename='badges/' + badge)}}" alt=""></li>
+        <h5 class="card-title">User Badges Earned (Displayed after completing more than one challenge)</h5>
+        {% if earned_badges %}
+          {% for badge in earned_badges %}
+              <div class="container-sm" style="max-width: 150; text-align: center; display: inline-block">
+              <img class="img-fluid" src="{{url_for('static', filename='badges/' + badge.image)}}" alt=""></li>
               </div>
-            </li>
           {% endfor %}
+        {% endif %}
         </div>
     </div>
 <br>
@@ -62,7 +82,7 @@
                   <td class="table-text">{{challenge['description']}}</td>
                   <td class="table-text">
                     <a href="{{ url_for('fitness_friends_challenge.challengehome', name=challenge.name,
-                              username=user.username) }}"
+                              username=current_user.username) }}"
                       class="btn btn-primary" role="button">
                      Visit Page 
                     </a>
@@ -97,7 +117,7 @@
     </div>
 <br>
     <div class="text-center">
-      <a href="{{ url_for('fitness_friends_challenge.createchallenge', username=user.username) }}"
+      <a href="{{ url_for('fitness_friends_challenge.createchallenge', username=current_user.username) }}"
         class="btn btn-primary align-center" role="button">Create a Challenge
       </a>
     </div>

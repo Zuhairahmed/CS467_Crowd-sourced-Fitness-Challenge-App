@@ -9,7 +9,7 @@
       <h5 class="card-title" style="text-align: center">{{challenge['name']}} Home Page</h5>
       <p class="card-text">Created by: {{challenge['creator']}}</p>
       {% if challenge_image %}
-      <div class="container-med" style="max-width: 500">
+      <div class="container-med" style="max-width: 500; text-align: center; display: inline-block;">
         <img class="img-fluid" src="{{url_for('static', filename='images/' + challenge_image)}}" alt="">
       </div>
       {% endif %}
@@ -18,7 +18,7 @@
           <h5 class="card-title">Badges you can earn on completion</h5>
           {% if challenge_badges %}
             {% for badge in challenge_badges %}
-            <div class="container-sm" style="max-width: 150">
+            <div class="container-sm" style="max-width: 150; text-align: center; display: inline-block;">
               <img class="img-fluid" src="{{url_for('static', filename='badges/' + badge)}}" alt="">
             </div>
             {% endfor %}
@@ -28,8 +28,8 @@
     </div>
     <div class="card">
       <div class="card-body">
-        {% if user %}
-        <h5 class="card-title" style="text-align: center">{{user['username']}}'s Goal Progress</h5>
+        {% if current_user.is_authenticated and goal %}
+        <h5 class="card-title" style="text-align: center">{{current_user.username}}'s {{goal['name']}} Progress</h5>
         {% endif %}
         <table class="table table-striped">
           <thead class="thead-dark"></thead>
@@ -42,7 +42,7 @@
           <tr>
             <td class="table-text">{{goal['first_target_number']}}</td>
             <td class="table-text">{{progress['first_goal_progress']}}</td>
-            {% if goal['first_target_number'] - progress['first_goal_progress'] == 0 %}
+            {% if progress['first_goal_progress'] >= goal['first_target_number'] %}
             <td class="table-text">Completed</td>
             {% else %}
             <td class="table-text">Incomplete</td>
@@ -51,7 +51,7 @@
           <tr>
             <td class="table-text">{{goal['second_target_number']}}</td>
             <td class="table-text">{{progress['second_goal_progress']}}</td>
-            {% if goal['second_target_number'] - progress['second_goal_progress'] == 0 %}
+            {% if progress['second_goal_progress'] >= goal['second_target_number'] %}
             <td class="table-text">Completed</td>
             {% else %}
             <td class="table-text">Incomplete</td>
@@ -60,7 +60,7 @@
           <tr>
             <td class="table-text">{{goal['third_target_number']}}</td>
             <td class="table-text">{{progress['third_goal_progress']}}</td>
-            {% if goal['third_target_number'] - progress['third_goal_progress'] == 0 %}
+            {% if progress['third_goal_progress'] >= goal['third_target_number'] %}
             <td class="table-text">Completed</td>
             {% else %}
             <td class="table-text">Incomplete</td>
@@ -72,26 +72,27 @@
         <form method="POST">
           <div class="form-group">
             {% if goal and progress %}
-              {% if goal['first_target_number'] - progress['first_goal_progress'] != 0 %}
-              <label for="target_one_input">Enter the progress achieved for first goal:</label>
-              <input type="text" class="form-control" placeholder="Number" name="first_goal_progress" 
-                id="target_one_input" required>
+              {% if goal['first_target_number'] > progress['first_goal_progress'] %}
+                <label for="target_one_input">Enter the progress achieved for first goal:</label>
+                <input type="text" class="form-control" placeholder="Number" name="first_goal_progress" 
+                  id="target_one_input" required>
+                <input type="hidden" class="form-control" name="second_goal_progress" value="">
+                <input type="hidden" class="form-control" name="third_goal_progress" value="">
               {% else %}
-              <input type="hidden" class="form-control" name="first_goal_progress" 
-                value="{{goal['first_target_number']}}">
-              {% endif %}
-              {% if goal['second_target_number'] - progress['second_goal_progress'] != 0 %}
-               <label for="target_two_input">Enter the progress achieved for the second goal:</label>
-               <input type="text" class="form-control" placeholder="Number" name="second_goal_progress"
-                id="target_two_input" required>
-              {% else %}
-              <input type="hidden" name="second_goal_progress" class="form-control" 
-                value="{{goal['second_target_number']}}">
-              {% endif %}
-              {% if goal['third_target_number'] - progress['third_goal_progress'] != 0 %}
-              <label for="target_three_input">Enter the progress achieved for the third goal:</label>
-              <input type="text" class="form-control" placeholder="Number" name="third_goal_progress" 
-                id="target_three_input" required>
+                <input type="hidden" class="form-control" name="first_goal_progress" value="">
+                {% if goal['second_target_number'] > progress['second_goal_progress'] %}
+                  <label for="target_two_input">Enter the progress achieved for the second goal:</label>
+                  <input type="text" class="form-control" placeholder="Number" name="second_goal_progress"
+                    id="target_two_input" required>
+                  <input type="hidden" class="form-control" name="third_goal_progress" value="">
+                {% else %}
+                  <input type="hidden" name="second_goal_progress" class="form-control" value="">
+                  {% if goal['third_target_number'] > progress['third_goal_progress'] %}
+                    <label for="target_three_input">Enter the progress achieved for the third goal:</label>
+                    <input type="text" class="form-control" placeholder="Number" name="third_goal_progress" 
+                      id="target_three_input" required>
+                  {% endif %}
+                {% endif %}
               {% endif %}
             {% endif %}
           </div>
@@ -100,11 +101,13 @@
           </button>
         </form>
         {% else %}
+        {% if current_user.is_authenticated %}
         <h5 class="card-title">You have completed the challenge and have been added to the Wall of Fame!</h5>
-        <a href="{{ url_for('fitness_friends_challenge.walloffame', username=user.username, 
+        <a href="{{ url_for('fitness_friends_challenge.walloffame', username=current_user.username, 
                   name=challenge.name) }}"
           class="btn btn-primary" role="button">Visit Wall of Fame
         </a>
+        {% endif %}
         {% endif %}
       </div>
     </div>
