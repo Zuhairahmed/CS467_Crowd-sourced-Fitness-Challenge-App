@@ -1,6 +1,6 @@
 Team Name: Fitness Friends Challenge (FFC)
 1. Hosted web app via Heroku  - https://fitnesschallengeapp.herokuapp.com/
-2. Cross-platform app also via Google Play Store (Pending Google Review) - https://play.google.com/store/apps/details?id=com.boss.friendsfitnesschallenge4 
+2. Cross-platform app also via Google Play Store - https://play.google.com/store/apps/details?id=com.boss.friendsfitnesschallenge4 
 
 
 Fitness Friends Challenge App - OSU CS467 Summer 2021
