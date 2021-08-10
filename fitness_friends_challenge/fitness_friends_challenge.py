@@ -405,7 +405,7 @@ def challengehome(username, name):
         db.session.add(user_progress)
         db.session.commit()
         return redirect(url_for('fitness_friends_challenge.challengehome', username=username, name=name))
-    challenge_image_by_creator = challenge.images[0] 
+    challenge_image_by_creator = challenge.images[0].name 
     print(f'challenge_images_by_creator before check is {challenge_image_by_creator}')
     print(f'user.images are {user.images}')
     for user_image in user.images:
