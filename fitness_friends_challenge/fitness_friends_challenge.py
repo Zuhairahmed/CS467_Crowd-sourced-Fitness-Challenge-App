@@ -347,7 +347,11 @@ def challengehome(username, name):
         print(f'user_progress is {user_progress}')
         print(f'user_progress.id is {user_progress.id}')
         print(f'goal_progress.id is {goal_progress.id}')
-        if user_progress.id == goal_progress.id:
+        print(f'user_progress.goal_id is {user_progress.goal_id}')
+        print(f'goal_progress.goal_id is {goal_progress.goal_id}')
+        print(f'user_progress.user_id is {user_progress.user_id}')
+        print(f'goal_progress.user_id is {goal_progress.user_id}')
+        if user_progress.goal_id == goal_progress.goal_id and user_progress.user_id == goal_progress.user_id:
             progress = user_progress
             print(f'progress is {progress}')
     if request.method == 'POST':
