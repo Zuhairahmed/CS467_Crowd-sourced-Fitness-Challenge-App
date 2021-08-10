@@ -226,6 +226,8 @@ def challenges(username, name):
         user.goals_progress.append(user_progress)
         db.session.add(user)
         db.session.commit()
+        db.session.add(user_progress)
+        db.session.commit()
         goal_progress = Progress.query.filter_by(goal_id=challenge_goal.id).first()
         challenge_goal.progresses.append(goal_progress)
         db.session.add(challenge_goal)
@@ -340,10 +342,17 @@ def challengehome(username, name):
     goal = Goal.query.filter_by(challenge_id=challenge.id).first()
     goal_progress = Progress.query.filter_by(goal_id=goal.id).first()
     user_goals_progress = Progress.query.filter_by(user_id=user.id).all()
+    print(f'user_goals_progress are {user_goals_progress}')
     for user_progress in user_goals_progress:
+        print(f'user_progress is {user_progress}')
+        print(f'user_progress.id is {user_progress.id}')
+        print(f'goal_progress.id is {goal_progress.id}')
         if user_progress.id == goal_progress.id:
             progress = user_progress
+            print(f'progress is {progress}')
     if request.method == 'POST':
+        print(f'progress.user_id in post is {progress.user_id}')
+        print(f'progress.goal_id in post is {progress.goal_id}')
         first_goal_progress = request.form['first_goal_progress']
         second_goal_progress = request.form['second_goal_progress']
         third_goal_progress = request.form['third_goal_progress']
@@ -392,16 +401,28 @@ def challengehome(username, name):
         db.session.add(user_progress)
         db.session.commit()
         return redirect(url_for('fitness_friends_challenge.challengehome', username=username, name=name))
+    challenge_image_by_creator = challenge.images[0] 
+    print(f'challenge_images_by_creator before check is {challenge_image_by_creator}')
+    print(f'user.images are {user.images}')
     for user_image in user.images:
+        print(f'user_image is {user_image}')
         for challenge_image in challenge.images:
+            print(f'challenge_image is {challenge_image}')
+            print(f'user_image.name is {user_image.name}')
+            print(f'challenge_image.name is {challenge_image.name}')
             if user_image.name == challenge_image.name:
                 challenge_image_by_creator = challenge_image.name
-            else:
-                challenge_image_by_creator = 'fitness1.jpg'
+                print(f'challenge_image_by_creator after assignment is {challenge_image_by_creator}')
     challenge_badges = []
     for badge in challenge.badges:
         challenge_badges.append(badge.image)
     challenge_incomplete = True
+    print(f'in get before progress and it is {progress}')
+    print(f'its user_id is {progress.user_id}')
+    print(f'its goal_id is {progress.goal_id}')
+    print(f'value of challenge_incomplete is {challenge_incomplete}')
+    print(f'progress.third_goal_progress is {progress.third_goal_progress}')
+    print(f'goal.third_target_number is {goal.third_target_number}')
     if progress.third_goal_progress >= goal.third_target_number:
         challenge_incomplete = False
     return render_template('challenge.html', challenge=challenge, challenge_image=challenge_image_by_creator,
